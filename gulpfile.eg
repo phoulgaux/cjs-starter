@@ -1,0 +1,40 @@
+require-macros:
+   earl-gulp -> task
+
+require:
+   gulp
+   gulp-clean
+   gulp-coffee
+   gulp-jade
+   gulp-sass
+   gulp-sourcemaps
+
+let src_dir = "./src"
+let out_dir = "./out"
+
+task coffee:
+   chain gulp:
+      @src{src_dir + "/**/*.coffee"}
+      @pipe{gulp-sourcemaps.init{}}
+      @pipe{gulp-coffee{}}
+      @pipe{gulp-sourcemaps.write{"../maps"}}
+      @pipe{gulp.dest{out_dir}}
+
+task jade:
+   chain gulp:
+      @src{src_dir + "/**/*.jade"}
+      @pipe{gulp-jade{}}
+      @pipe{gulp.dest{out_dir}}
+
+task sass:
+   chain gulp:
+      @src{src_dir + "/**/*.sass"}
+      @pipe{gulp-sass{indented-syntax = true}}
+      @pipe{gulp.dest{out_dir}}
+
+task clean:
+   chain gulp:
+      @src{{out_dir, "./egcache", "./maps"}}
+      @pipe{gulp-clean{}}
+
+task default < {coffee, sass}
