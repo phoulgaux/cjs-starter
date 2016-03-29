@@ -37,4 +37,4 @@ task clean:
       @src{{out_dir, "./egcache", "./maps"}}
       @pipe{gulp-clean{}}
 
-task default < {coffee, sass}
+task default < {coffee, jade, sass}
